@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noryx — Security Operations Platform | Malaysia</title>
+<meta name="description" content="The command center for your entire security operation. 20+ modules. One dashboard. Zero Excel. Built in Malaysia, for Malaysia. EPF/SOCSO/EIS compliant.">
+<meta name="keywords" content="security operations software, guard management system, Malaysia, PIKM, KDN, security company software, pengawal keselamatan">
+<meta property="og:title" content="Noryx — Security Operations Platform">
+<meta property="og:description" content="Replace Excel, WhatsApp, and paper logbooks with one platform. Built by someone who grew up in the security industry.">
+<meta property="og:image" content="noryx-mark-512.png">
+<meta property="og:url" content="https://noryx.my">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Noryx">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&display=swap" rel="stylesheet">
+<style>
+/* ===== CSS RESET & VARIABLES ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--dark:#0B0F1A;
+--dark-2:#111827;
+--dark-3:#1E293B;
+--blue:#0EA5E9;
+--blue-dk:#0284C7;
+--blue-lt:#38BDF8;
+--white:#F8FAFC;
+--slate:#94A3B8;
+--slate-dk:#64748B;
+--amber:#F59E0B;
+--green:#10B981;
+--red:#EF4444;
+--red-muted:rgba(239,68,68,0.15);
+--green-muted:rgba(16,185,129,0.15);
+--font:'DM Sans',sans-serif;
+--max-w:1100px;
+--nav-h:64px;
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--dark);color:var(--white);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--blue);text-decoration:none;transition:color .2s}
+a:hover{color:var(--blue-lt)}
+
+/* ===== UTILITY ===== */
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.label{font-size:12px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:16px}
+.section-title{font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:-.5px;line-height:1.15;margin-bottom:16px}
+.section-subtitle{font-size:17px;color:var(--slate);max-width:640px;margin-bottom:48px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:8px;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;border:none;min-height:44px}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:var(--blue-dk);color:#fff}
+.btn-outline{background:transparent;color:var(--slate);border:1px solid rgba(255,255,255,.15)}
+.btn-outline:hover{border-color:var(--blue);color:var(--white)}
+
+/* ===== SCROLL ANIMATIONS ===== */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* ===== SECTION BACKGROUNDS ===== */
+.sec-dark{background:var(--dark)}
+.sec-dark-2{background:var(--dark-2)}
+.section{padding:100px 0}
+.section-border{border-top:1px solid rgba(255,255,255,.05)}
+
+/* ===== 01: NAV ===== */
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:1000;transition:all .3s}
+.nav.scrolled{background:rgba(11,15,26,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-inner{max-width:var(--max-w);margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:700;letter-spacing:1px;color:var(--white)}
+.nav-logo svg{width:28px;height:28px}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{color:var(--slate);font-size:14px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{background:var(--blue);color:#fff!important;padding:8px 20px;border-radius:6px;font-size:14px;font-weight:600}
+.nav-cta:hover{background:var(--blue-dk)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+.hamburger span{width:22px;height:2px;background:var(--white);border-radius:2px;transition:all .3s}
+.mobile-menu{display:none;position:fixed;top:0;right:-100%;width:280px;height:100vh;background:var(--dark-2);z-index:1001;padding:80px 32px 32px;transition:right .3s ease;border-left:1px solid rgba(255,255,255,.06)}
+.mobile-menu.open{right:0}
+.mobile-menu a{display:block;color:var(--slate);font-size:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.05);font-weight:500}
+.mobile-menu a:hover{color:var(--white)}
+.mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000}
+.mobile-overlay.open{display:block}
+.mobile-close{position:absolute;top:20px;right:20px;background:none;border:none;color:var(--white);font-size:24px;cursor:pointer;padding:8px}
+
+@media(max-width:768px){
+.nav-links{display:none}
+.hamburger{display:flex}
+.mobile-menu{display:block}
+}
+
+/* ===== 02: HERO ===== */
+.hero{padding:140px 0 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(14,165,233,.08) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(14,165,233,.2) 50%,transparent)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid rgba(16,185,129,.25);border-radius:100px;font-size:13px;color:var(--green);margin-bottom:28px;background:rgba(16,185,129,.05)}
+.hero-badge-dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:clamp(36px,5.5vw,64px);font-weight:700;letter-spacing:-1px;line-height:1.1;margin-bottom:20px;max-width:800px}
+.hero h1 span{color:var(--blue)}
+.hero-sub{font-size:17px;color:var(--slate);max-width:600px;margin-bottom:36px;line-height:1.7}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;border-top:1px solid rgba(255,255,255,.06);padding-top:36px}
+.hero-stat-num{font-size:28px;font-weight:700;color:var(--white);letter-spacing:-.5px}
+.hero-stat-label{font-size:13px;color:var(--slate-dk);margin-top:4px}
+@media(max-width:768px){
+.hero{padding:120px 0 60px}
+.hero-stats{grid-template-columns:repeat(2,1fr);gap:20px}
+}
+
+/* ===== 03: SOCIAL PROOF BAR ===== */
+.proof-bar{padding:24px 0}
+.proof-bar .container{display:flex;justify-content:center;gap:32px;flex-wrap:wrap}
+.proof-pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--slate);letter-spacing:.5px}
+.proof-pill svg{width:16px;height:16px;color:var(--blue);flex-shrink:0}
+@media(max-width:768px){
+.proof-bar .container{gap:16px;justify-content:center}
+}
+
+/* ===== 04: PROBLEM / SOLUTION ===== */
+.prob-sol{display:grid;grid-template-columns:1fr 1fr;gap:2px;border-radius:12px;overflow:hidden}
+.prob-col,.sol-col{padding:36px 32px}
+.prob-col{background:var(--red-muted);border-left:3px solid rgba(239,68,68,.3)}
+.sol-col{background:var(--green-muted);border-left:3px solid rgba(16,185,129,.3)}
+.prob-col-header,.sol-col-header{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:24px}
+.prob-col-header{color:rgba(239,68,68,.7)}
+.sol-col-header{color:rgba(16,185,129,.7)}
+.ps-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:18px;font-size:15px;color:var(--slate);line-height:1.5}
+.ps-item:last-child{margin-bottom:0}
+.ps-icon{flex-shrink:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center;margin-top:2px;font-size:14px;font-weight:700}
+.ps-icon.bad{color:var(--red)}
+.ps-icon.good{color:var(--green)}
+@media(max-width:768px){
+.prob-sol{grid-template-columns:1fr}
+}
+
+/* ===== 05: PLATFORM OVERVIEW ===== */
+.platform-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.platform-card{background:var(--dark-3);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:28px 24px;transition:border-color .3s}
+.platform-card:hover{border-color:rgba(14,165,233,.2)}
+.platform-card-icon{width:40px;height:40px;border-radius:10px;background:rgba(14,165,233,.1);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.platform-card-icon svg{width:20px;height:20px;color:var(--blue)}
+.platform-card h3{font-size:18px;font-weight:700;margin-bottom:4px}
+.platform-card .card-sub{font-size:13px;color:var(--blue);margin-bottom:12px;font-weight:500}
+.platform-card p{font-size:14px;color:var(--slate);line-height:1.6;margin-bottom:20px}
+/* Browser mockup */
+.browser-frame{border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:var(--dark)}
+.browser-bar{height:28px;background:var(--dark-3);display:flex;align-items:center;padding:0 12px;gap:6px}
+.browser-dot{width:8px;height:8px;border-radius:50%}
+.browser-dot.r{background:#EF4444}
+.browser-dot.y{background:#F59E0B}
+.browser-dot.g{background:#10B981}
+.browser-url{margin-left:12px;font-size:10px;color:var(--slate-dk);background:rgba(255,255,255,.05);padding:2px 10px;border-radius:4px;flex:1;max-width:200px}
+.browser-frame img{width:100%;display:block}
+/* Phone mockup */
+.phone-frame{max-width:220px;margin:0 auto;border-radius:24px;overflow:hidden;border:3px solid var(--dark-3);background:var(--dark);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.phone-notch{height:20px;background:var(--dark-3);display:flex;align-items:center;justify-content:center}
+.phone-notch-inner{width:60px;height:6px;background:rgba(255,255,255,.1);border-radius:3px}
+.phone-frame img{width:100%;display:block}
+@media(max-width:768px){
+.platform-cards{grid-template-columns:1fr}
+}
+
+/* ===== 06: FEATURE DEEP-DIVES ===== */
+.feature-block{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-bottom:80px}
+.feature-block:last-child{margin-bottom:0}
+.feature-block.reversed{direction:rtl}
+.feature-block.reversed>*{direction:ltr}
+.feature-icon{width:44px;height:44px;border-radius:10px;background:rgba(14,165,233,.1);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.feature-icon svg{width:22px;height:22px;color:var(--blue)}
+.feature-text h3{font-size:clamp(22px,3vw,28px);font-weight:700;letter-spacing:-.3px;margin-bottom:12px;line-height:1.2}
+.feature-text p{font-size:15px;color:var(--slate);line-height:1.7;margin-bottom:20px}
+.feature-bullets{list-style:none;display:flex;flex-direction:column;gap:10px}
+.feature-bullets li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--slate);line-height:1.5}
+.feature-bullets li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
+@media(max-width:768px){
+.feature-block,.feature-block.reversed{grid-template-columns:1fr;direction:ltr}
+.feature-block.reversed>*{direction:ltr}
+.feature-visual{order:2}
+.feature-text{order:1}
+}
+
+/* ===== 07: CLIENT PORTAL SHOWCASE ===== */
+.portal-showcase{border:1px solid rgba(14,165,233,.15);border-radius:16px;padding:48px;background:linear-gradient(135deg,rgba(14,165,233,.03),rgba(14,165,233,.06));display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.portal-checks{list-style:none;display:flex;flex-direction:column;gap:12px}
+.portal-checks li{display:flex;gap:10px;font-size:14px;color:var(--slate);line-height:1.5}
+.portal-checks li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.portal-right h3{font-size:20px;font-weight:700;margin-bottom:12px;line-height:1.3}
+.portal-right p{font-size:15px;color:var(--slate);margin-bottom:24px;line-height:1.7}
+@media(max-width:768px){
+.portal-showcase{grid-template-columns:1fr;padding:28px}
+}
+
+/* ===== 08: GUARD PORTAL SHOWCASE ===== */
+.guard-showcase{display:grid;grid-template-columns:auto 1fr;gap:64px;align-items:center}
+.guard-phone-area{text-align:center}
+.lang-badges{display:flex;gap:8px;justify-content:center;margin-top:16px}
+.lang-badge{font-size:11px;padding:4px 10px;border-radius:100px;border:1px solid rgba(255,255,255,.1);color:var(--slate);font-weight:500}
+.guard-features{list-style:none;display:flex;flex-direction:column;gap:14px}
+.guard-features li{display:flex;gap:10px;font-size:14px;color:var(--slate);line-height:1.5}
+.guard-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.guard-included{font-size:14px;color:var(--green);font-weight:600;margin-top:24px}
+@media(max-width:768px){
+.guard-showcase{grid-template-columns:1fr;gap:40px}
+.guard-phone-area{order:1}
+}
+
+/* ===== 09: PRICING ===== */
+.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
+.pricing-card{background:var(--dark-3);border:1px solid rgba(255,255,255,.05);border-radius:12px;overflow:hidden;transition:border-color .3s;position:relative}
+.pricing-card:hover{border-color:rgba(14,165,233,.2)}
+.pricing-card.featured{border-color:rgba(14,165,233,.3)}
+.pricing-strip{height:4px}
+.pricing-badge{position:absolute;top:12px;right:12px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--blue);color:#fff;padding:3px 8px;border-radius:4px}
+.pricing-body{padding:28px 24px}
+.pricing-tier{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--slate-dk);margin-bottom:8px}
+.pricing-price{font-size:36px;font-weight:700;letter-spacing:-1px;margin-bottom:2px}
+.pricing-per{font-size:13px;color:var(--slate-dk)}
+.pricing-min{font-size:12px;color:var(--slate-dk);margin-top:4px;margin-bottom:20px}
+.pricing-divider{height:1px;background:rgba(255,255,255,.06);margin-bottom:20px}
+.pricing-features{list-style:none;display:flex;flex-direction:column;gap:10px}
+.pricing-features li{display:flex;gap:8px;font-size:13px;color:var(--slate);line-height:1.4}
+.pricing-features li::before{content:'+';color:var(--green);font-weight:700;flex-shrink:0}
+.pricing-note{font-size:13px;color:var(--slate-dk);text-align:center;max-width:600px;margin:0 auto}
+@media(max-width:900px){
+.pricing-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+.pricing-grid{grid-template-columns:1fr}
+}
+
+/* ===== 10: FOUNDING MEMBER ===== */
+.founding-box{border:1.5px solid var(--amber);border-radius:16px;padding:48px;background:rgba(245,158,11,.03);display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:0}
+.founding-box h3{font-size:20px;font-weight:700;margin-bottom:16px}
+.founding-old{font-size:18px;color:var(--slate-dk);text-decoration:line-through;margin-bottom:4px}
+.founding-price{font-size:42px;font-weight:700;color:var(--amber);letter-spacing:-1px;margin-bottom:20px}
+.founding-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.founding-list li{display:flex;gap:8px;font-size:14px;color:var(--slate);line-height:1.4}
+.founding-list li::before{content:'✓';color:var(--amber);font-weight:700;flex-shrink:0}
+.slot-tracker{display:flex;gap:6px;margin-top:24px}
+.slot{width:28px;height:10px;border-radius:3px;border:1px solid rgba(245,158,11,.3)}
+.slot.filled{background:var(--amber);border-color:var(--amber)}
+.slot-caption{font-size:12px;color:var(--amber);margin-top:10px;font-weight:500}
+@media(max-width:768px){
+.founding-box{grid-template-columns:1fr;padding:28px}
+}
+
+/* ===== 11: COMPETITOR COMPARISON ===== */
+.comp-table{width:100%;border-collapse:collapse;font-size:14px}
+.comp-table th,.comp-table td{padding:14px 16px;text-align:left;border-bottom:1px solid rgba(255,255,255,.05)}
+.comp-table thead th{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--slate-dk);background:var(--dark-3)}
+.comp-table thead th:first-child{border-radius:8px 0 0 0}
+.comp-table thead th:last-child{border-radius:0 8px 0 0}
+.comp-table thead th:nth-child(2){color:var(--blue)}
+.comp-table tbody td{color:var(--slate)}
+.comp-table tbody td:nth-child(2){color:var(--white);font-weight:500;border-left:2px solid var(--blue)}
+.comp-table tbody td:first-child{color:var(--slate-dk);font-weight:500}
+.comp-table tbody tr:nth-child(even){background:rgba(255,255,255,.02)}
+.comp-table-wrap{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.05);overflow-x:auto}
+
+/* ===== 12: ABOUT / FOUNDER ===== */
+.founder-quote{font-size:clamp(18px,2.5vw,22px);color:var(--white);line-height:1.6;font-style:italic;position:relative;padding-left:24px;border-left:3px solid var(--blue);margin-bottom:16px;max-width:720px}
+.founder-attr{font-size:15px;color:var(--slate);margin-bottom:48px;padding-left:24px}
+.founder-attr strong{color:var(--white)}
+.trust-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.trust-item{background:var(--dark-3);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:24px;font-size:14px;color:var(--slate);line-height:1.6}
+@media(max-width:768px){
+.trust-row{grid-template-columns:1fr}
+}
+
+/* ===== 13: FAQ ===== */
+.faq-list{max-width:720px;margin:0 auto}
+.faq-item{border-bottom:1px solid rgba(255,255,255,.06)}
+.faq-q{width:100%;background:none;border:none;color:var(--white);font-family:var(--font);font-size:16px;font-weight:600;text-align:left;padding:20px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-q:hover{color:var(--blue)}
+.faq-q svg{width:18px;height:18px;flex-shrink:0;color:var(--slate-dk);transition:transform .3s}
+.faq-item.open .faq-q svg{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease}
+.faq-item.open .faq-a{max-height:400px}
+.faq-a-inner{padding:0 0 20px;font-size:15px;color:var(--slate);line-height:1.7}
+
+/* ===== 14: FINAL CTA ===== */
+.final-cta{text-align:center;padding:120px 0}
+.final-cta h2{font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:-.5px;margin-bottom:12px}
+.final-cta p{font-size:17px;color:var(--slate);margin-bottom:32px}
+.final-cta .btn{font-size:17px;padding:16px 36px}
+.final-email{font-size:14px;color:var(--slate-dk);margin-top:16px}
+.final-email a{color:var(--slate)}
+
+/* ===== 15: FOOTER ===== */
+.footer{padding:32px 0;border-top:1px solid rgba(255,255,255,.05)}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-left{font-size:13px;color:var(--slate-dk)}
+.footer-right{display:flex;gap:24px}
+.footer-right a{font-size:13px;color:var(--slate-dk)}
+.footer-right a:hover{color:var(--slate)}
+</style>
+</head>
+<body>
+
+<!-- ===== 01: NAV ===== -->
+<nav class="nav" id="nav">
+<div class="nav-inner">
+<a href="#" class="nav-logo">
+<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="6" cy="6" r="3" fill="#0EA5E9"/>
+<circle cx="26" cy="6" r="3" fill="#0EA5E9"/>
+<circle cx="16" cy="16" r="3" fill="#0EA5E9"/>
+<circle cx="6" cy="26" r="3" fill="#0EA5E9"/>
+<circle cx="26" cy="26" r="3" fill="#0EA5E9"/>
+<line x1="6" y1="6" x2="16" y2="16" stroke="#0EA5E9" stroke-width="1.5"/>
+<line x1="26" y1="6" x2="16" y2="16" stroke="#0EA5E9" stroke-width="1.5"/>
+<line x1="16" y1="16" x2="6" y2="26" stroke="#0EA5E9" stroke-width="1.5"/>
+<line x1="16" y1="16" x2="26" y2="26" stroke="#0EA5E9" stroke-width="1.5"/>
+<line x1="6" y1="6" x2="26" y2="6" stroke="#0EA5E9" stroke-width="1.5"/>
+<line x1="6" y1="26" x2="26" y2="26" stroke="#0EA5E9" stroke-width="1.5"/>
+</svg>
+NORYX
+</a>
+<div class="nav-links">
+<a href="#features">Features</a>
+<a href="#pricing">Pricing</a>
+<a href="#about">About</a>
+<a href="https://wa.me/60121000503?text=Hi%20Arvin%2C%20I%27d%20like%20to%20book%20a%20Noryx%20demo." class="nav-cta" target="_blank" rel="noopener">Book a Demo</a>
+</div>
+<button class="hamburger" id="menuBtn" aria-label="Menu">
+<span></span><span></span><span></span>
+</button>
+</div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-overlay" id="overlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+<button class="mobile-close" id="closeMenu">&times;</button>
+<a href="#features" class="mobile-link">Features</a>
+<a href="#pricing" class="mobile-link">Pricing</a>
+<a href="#about" class="mobile-link">About</a>
+<a href="#faq" class="mobile-link">FAQ</a>
+<a href="https://wa.me/60121000503?text=Hi%20Arvin%2C%20I%27d%20like%20to%20book%20a%20Noryx%20demo." target="_blank" rel="noopener" style="color:var(--blue);font-weight:600">Book a Demo</a>
+</div>
+
+<!-- ===== 02: HERO ===== -->
+<section class="hero sec-dark">
+<div class="container">
+<div class="fade-up">
+<div class="hero-badge">
+<span class="hero-badge-dot"></span>
+Now managing 220+ guards daily
+</div>
+</div>
+<h1 class="fade-up">The command center for your <span>entire security operation.</span></h1>
+<p class="hero-sub fade-up">20+ modules. One dashboard. Zero Excel. Replace WhatsApp groups, paper logbooks, and manual invoicing with a platform built by someone who grew up in the industry.</p>
+<div class="hero-ctas fade-up">
+<a href="https://wa.me/60121000503?text=Hi%20Arvin%2C%20I%27d%20like%20to%20book%20a%20Noryx%20demo." class="btn btn-primary" target="_blank" rel="noopener">Book a 30-min demo</a>
+<a href="#features" class="btn btn-outline">See what you get</a>
+</div>
+<div class="hero-stats fade-up">
+<div>
+<div class="hero-stat-num">220+</div>
+<div class="hero-stat-label">Guards managed daily</div>
+</div>
+<div>
+<div class="hero-stat-num">20+</div>
+<div class="hero-stat-label">Modules built in</div>
+</div>
+<div>
+<div class="hero-stat-num">&lt;2 min</div>
+<div class="hero-stat-label">Import 200 guards</div>
+</div>
+<div>
+<div class="hero-stat-num">29%</div>
+<div class="hero-stat-label">Net margin visibility</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===== 03: SOCIAL PROOF BAR ===== -->
+<section class="proof-bar sec-dark-2 section-border">
+<div class="container">
+<div class="proof-pill">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+KDN Compliant
+</div>
+<div class="proof-pill">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+PIKM Registered Agencies
+</div>
+<div class="proof-pill">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+Built in Malaysia, for Malaysia
+</div>
+</div>
+</section>
+
+<!-- ===== 04: PROBLEM / SOLUTION ===== -->
+<section class="section sec-dark-2" id="problem">
+<div class="container">
+<div class="label fade-up">The problem</div>
+<h2 class="section-title fade-up">Your Monday now vs. your Monday with Noryx.</h2>
+<div class="prob-sol fade-up" style="margin-top:40px">
+<div class="prob-col">
+<div class="prob-col-header">Without Noryx</div>
+<div class="ps-item"><span class="ps-icon bad">✗</span>3am call — guard didn't show, scroll 50 WhatsApp messages</div>
+<div class="ps-item"><span class="ps-icon bad">✗</span>Client wants report — 2 hours of manual Excel work</div>
+<div class="ps-item"><span class="ps-icon bad">✗</span>No idea which contracts actually make money</div>
+<div class="ps-item"><span class="ps-icon bad">✗</span>Guard passport expired — found out today</div>
+<div class="ps-item"><span class="ps-icon bad">✗</span>Complaints lost in WhatsApp threads</div>
+<div class="ps-item"><span class="ps-icon bad">✗</span>Tender deadline missed — didn't track it</div>
+</div>
+<div class="sol-col">
+<div class="sol-col-header">With Noryx</div>
+<div class="ps-item"><span class="ps-icon good">✓</span>Dashboard — every guard visible in 10 seconds</div>
+<div class="ps-item"><span class="ps-icon good">✓</span>Reports auto-generated, one click to share</div>
+<div class="ps-item"><span class="ps-icon good">✓</span>Per-guard profitability calculated live</div>
+<div class="ps-item"><span class="ps-icon good">✓</span>Document alerts 60 days before expiry</div>
+<div class="ps-item"><span class="ps-icon good">✓</span>Complaints tracked with response time measurement</div>
+<div class="ps-item"><span class="ps-icon good">✓</span>Tender deadlines flagged with automatic reminders</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===== 05: PLATFORM OVERVIEW ===== -->
+<section class="section sec-dark section-border" id="platform">
+<div class="container">
+<div class="label fade-up">Platform</div>
+<h2 class="section-title fade-up">Three connected platforms. One subscription.</h2>
+<p class="section-subtitle fade-up">Everything your security company needs — operations, client management, and guard deployment — working together.</p>
+<div class="platform-cards">
+<!-- OPS -->
+<div class="platform-card fade-up">
+<div class="platform-card-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+</div>
+<h3>Noryx OPS</h3>
+<div class="card-sub">Your command center</div>
+<p>Manage guards, invoicing, contracts, profitability, leads, tenders, and documents from one dashboard.</p>
+<div class="browser-frame">
+<div class="browser-bar">
+<span class="browser-dot r"></span>
+<span class="browser-dot y"></span>
+<span class="browser-dot g"></span>
+<span class="browser-url">crm.noryx.my</span>
+</div>
+<img src="img/ops-dashboard.png" alt="Noryx OPS Dashboard" loading="lazy">
+</div>
+</div>
+<!-- Client Portal -->
+<div class="platform-card fade-up">
+<div class="platform-card-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+</div>
+<h3>Client Portal</h3>
+<div class="card-sub">White-labeled for your brand</div>
+<p>Your clients log in to see their guards, invoices, and submit complaints. They see your brand, never Noryx.</p>
+<div class="browser-frame">
+<div class="browser-bar">
+<span class="browser-dot r"></span>
+<span class="browser-dot y"></span>
+<span class="browser-dot g"></span>
+<span class="browser-url">portal.yourcompany.com</span>
+</div>
+<img src="img/portal-dashboard.png" alt="Client Portal Dashboard" loading="lazy">
+</div>
+</div>
+<!-- Guard Portal -->
+<div class="platform-card fade-up">
+<div class="platform-card-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+</div>
+<h3>Guard Portal</h3>
+<div class="card-sub">Works offline. 3 languages.</div>
+<p>Guards clock in with GPS + selfie. Incident reports. SOPs. Installs in 30 seconds. No app store needed.</p>
+<div class="phone-frame">
+<div class="phone-notch"><div class="phone-notch-inner"></div></div>
+<img src="img/guard-clockin.png" alt="Guard Portal Clock-in" loading="lazy">
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===== 06: FEATURE DEEP-DIVES ===== -->
+<section class="section sec-dark-2 section-border" id="features">
+<div class="container">
+<div class="label fade-up">Features</div>
+<h2 class="section-title fade-up" style="margin-bottom:56px">Built for how security companies actually work.</h2>
+
+<!-- Feature 1: Profitability -->
+<div class="feature-block fade-up">
+<div class="feature-text">
+<div class="feature-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+</div>
+<h3>See which contracts make money. Instantly.</h3>
+<p>Every contract broken down: revenue, wage cost, EPF/SOCSO/EIS, overhead, profit margin. Stop guessing which sites are profitable and which are bleeding money.</p>
+<ul class="feature-bullets">
+<li>Per-contract, per-site, per-guard margin analysis</li>
+<li>Overhead allocation built in</li>
+<li>Real-time — updates as you add guards or adjust wages</li>
+</ul>
+</div>
+<div class="feature-visual">
+<div class="browser-frame">
+<div class="browser-bar">
+<span class="browser-dot r"></span><span class="browser-dot y"></span><span class="browser-dot g"></span>
+<span class="browser-url">crm.noryx.my/profitability</span>
+</div>
+<img src="img/feature-profitability.png" alt="Profitability P&L Module" loading="lazy">
+</div>
+</div>
+</div>
+
+<!-- Feature 2: Invoicing (reversed) -->
+<div class="feature-block reversed fade-up">
+<div class="feature-text">
+<div class="feature-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M16 13H8M16 17H8M10 9H8"/></svg>
+</div>
+<h3>One click from contract to invoice.</h3>
+<p>Auto-calculated from your contracts. Base + ad-hoc charges + SST. Record payments, track aging, handle partial payments. No more manual Excel invoices.</p>
+<ul class="feature-bullets">
+<li>Auto-generate from active contracts</li>
+<li>SST calculated automatically</li>
+<li>Payment recording with aging report</li>
+</ul>
+</div>
+<div class="feature-visual">
+<div class="browser-frame">
+<div class="browser-bar">
+<span class="browser-dot r"></span><span class="browser-dot y"></span><span class="browser-dot g"></span>
+<span class="browser-url">crm.noryx.my/invoicing</span>
+</div>
+<img src="img/feature-invoicing.png" alt="Invoicing Module" loading="lazy">
+</div>
+</div>
+</div>
+
+<!-- Feature 3: Document Tracker -->
+<div class="feature-block fade-up">
+<div class="feature-text">
+<div class="feature-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+</div>
+<h3>Never miss an expiry again.</h3>
+<p>Passport, KDN license, insurance, certifications — all tracked with configurable reminders at 30, 60, 90, or 180 days. One expired document can shut down your operation.</p>
+<ul class="feature-bullets">
+<li>Configurable alert thresholds</li>
+<li>Dashboard widget shows upcoming expiries</li>
+<li>Covers guards, company, and client documents</li>
+</ul>
+</div>
+<div class="feature-visual">
+<div class="browser-frame">
+<div class="browser-bar">
+<span class="browser-dot r"></span><span class="browser-dot y"></span><span class="browser-dot g"></span>
+<span class="browser-url">crm.noryx.my/documents</span>
+</div>
+<img src="img/feature-documents.png" alt="Document Tracker" loading="lazy">
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===== 07: CLIENT PORTAL SHOWCASE ===== -->
+<section class="section sec-dark section-border" id="portal-section">
+<div class="container">
+<div class="label fade-up">Client Portal</div>
+<h2 class="section-title fade-up" style="margin-bottom:40px">Give your clients their own login. They see your brand. Never Noryx.</h2>
+<div class="portal-showcase fade-up">
+<div>
+<ul class="portal-checks">
+<li>White-labeled — your logo, your colors</li>
+<li>Guard roster with monthly client ratings</li>
+<li>Invoice viewing + payment proof upload</li>
+<li>Complaint submission — syncs to your OPS instantly</li>
+<li>Site instructions — clients send direct to guards</li>
+<li>Monthly summary reports for JMB/MC meetings</li>
+<li>SOPs + shared documents (insurance, KDN)</li>
+<li>Dark mode + Bahasa Malaysia toggle</li>
+</ul>
+</div>
+<div class="portal-right">
+<h3>Your property managers get professionalism they've never seen from a security company.</h3>
+<p>No more sending invoices on WhatsApp. No more lost complaint messages. Everything tracked, timestamped, and professional.</p>
+<a href="#pricing" class="btn btn-outline" style="margin-bottom:28px">Available on Elite &amp; Command</a>
+<div class="browser-frame" style="margin-top:0">
+<div class="browser-bar">
+<span class="browser-dot r"></span><span class="browser-dot y"></span><span class="browser-dot g"></span>
+<span class="browser-url">portal.yourcompany.com</span>
+</div>
+<img src="img/portal-guards.png" alt="Client Portal Guard Roster" loading="lazy">
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===== 08: GUARD PORTAL SHOWCASE ===== -->
+<section class="section sec-dark-2 section-border">
+<div class="container">
+<div class="label fade-up">Guard Portal</div>
+<h2 class="section-title fade-up" style="margin-bottom:40px">Your guards clock in with a selfie and GPS. In 3 languages. Even offline.</h2>
+<div class="guard-showcase fade-up">
+<div class="guard-phone-area">
+<div class="phone-frame" style="max-width:240px">
+<div class="phone-notch"><div class="phone-notch-inner"></div></div>
+<img src="img/guard-portal-full.png" alt="Guard Portal Home" loading="lazy">
+</div>
+<div class="lang-badges">
+<span class="lang-badge">English</span>
+<span class="lang-badge">Bahasa Malaysia</span>
+<span class="lang-badge">नेपाली</span>
+</div>
+</div>
+<div>
+<ul class="guard-features">
+<li>Installs in 30 seconds — no app store, no download</li>
+<li>GPS geofencing — know guards are at the right site</li>
+<li>Selfie capture — visual proof of attendance</li>
+<li>Offline support — queues data, syncs when internet returns</li>
+<li>Incident reporting from the field</li>
+<li>Shift handover notes between guards</li>
+<li>Emergency protocols and contact numbers</li>
+<li>6-digit PIN login with brute-force protection</li>
+</ul>
+<div class="guard-included">Included in every plan</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===== 09: PRICING ===== -->
+<section class="section sec-dark section-border" id="pricing">
+<div class="container">
+<div class="label fade-up">Pricing</div>
+<h2 class="section-title fade-up">Simple per-guard pricing. No hidden fees.</h2>
+<p class="section-subtitle fade-up">Guard Portal PWA included in every plan. Client Portal unlocks at Elite.</p>
+<div class="pricing-grid">
+<!-- Basic -->
+<div class="pricing-card fade-up">
+<div class="pricing-strip" style="background:var(--slate-dk)"></div>
+<div class="pricing-body">
+<div class="pricing-tier">OPS Basic</div>
+<div class="pricing-price" style="color:var(--slate)">RM 8</div>
+<div class="pricing-per">/guard/month</div>
+<div class="pricing-min">min RM 400/mo</div>
+<div class="pricing-divider"></div>
+<ul class="pricing-features">
+<li>Core CRM modules</li>
+<li>Guard Portal PWA</li>
+<li>Guard profiles + salary calc</li>
+<li>QR attendance</li>
+<li>Document alerts</li>
+<li>Profitability P&amp;L</li>
+<li>2 admin users</li>
+<li>Email support (48hr)</li>
+</ul>
+</div>
+</div>
+<!-- Pro -->
+<div class="pricing-card featured fade-up">
+<div class="pricing-strip" style="background:var(--blue)"></div>
+<div class="pricing-badge">Best Value</div>
+<div class="pricing-body">
+<div class="pricing-tier">OPS Pro ★</div>
+<div class="pricing-price" style="color:var(--blue)">RM 15</div>
+<div class="pricing-per">/guard/month</div>
+<div class="pricing-min">min RM 750/mo</div>
+<div class="pricing-divider"></div>
+<ul class="pricing-features">
+<li>Everything in Basic</li>
+<li>Invoicing (auto + SST)</li>
+<li>Calendar</li>
+<li>Business Finder (GPS)</li>
+<li>Client Health tracking</li>
+<li>Master Import (Excel)</li>
+<li>Activity Log</li>
+<li>5 users, WhatsApp 24hr</li>
+</ul>
+</div>
+</div>
+<!-- Elite -->
+<div class="pricing-card fade-up">
+<div class="pricing-strip" style="background:var(--blue-dk)"></div>
+<div class="pricing-body">
+<div class="pricing-tier">OPS Elite</div>
+<div class="pricing-price" style="color:var(--blue-dk)">RM 25</div>
+<div class="pricing-per">/guard/month</div>
+<div class="pricing-min">min RM 1,250/mo</div>
+<div class="pricing-divider"></div>
+<ul class="pricing-features">
+<li>Everything in Pro</li>
+<li>Client Portal (white-labeled)</li>
+<li>Deployment Manager</li>
+<li>Cost Intelligence</li>
+<li>Cost Settings</li>
+<li>Recruitment module</li>
+<li>10 users, priority support</li>
+</ul>
+</div>
+</div>
+<!-- Command -->
+<div class="pricing-card fade-up">
+<div class="pricing-strip" style="background:var(--dark-3)"></div>
+<div class="pricing-body">
+<div class="pricing-tier">OPS Command</div>
+<div class="pricing-price" style="color:var(--white)">RM 40</div>
+<div class="pricing-per">/guard/month</div>
+<div class="pricing-min">min RM 2,000/mo</div>
+<div class="pricing-divider"></div>
+<ul class="pricing-features">
+<li>Everything in Elite</li>
+<li>Unlimited users</li>
+<li>Dedicated manager</li>
+<li>White glove onboarding</li>
+<li>Quarterly reviews</li>
+<li>Priority features</li>
+<li>Same-day support</li>
+</ul>
+</div>
+</div>
+</div>
+<p class="pricing-note fade-up">All prices in RM, excl. SST. Min 12-month commitment, then month-to-month. Guard count snapshot on billing date.</p>
+</div>
+</section>
+
+<!-- ===== 10: FOUNDING MEMBER OFFER ===== -->
+<section class="sec-dark" style="padding:0 0 100px">
+<div class="container">
+<div class="founding-box fade-up">
+<div>
+<h3>One-time setup</h3>
+<div class="founding-old">RM 5,000</div>
+<div class="founding-price">RM 2,500</div>
+<ul class="founding-list">
+<li>Full data migration (up to 500 guards)</li>
+<li>System configuration &amp; cost settings</li>
+<li>2 training sessions (3.5 hours)</li>
+<li>Guard Portal rollout at all sites</li>
+<li>30 days post-go-live support</li>
+</ul>
+</div>
+<div>
+<h3>Subscription benefits</h3>
+<ul class="founding-list">
+<li>20% off Year 1 per-guard rate</li>
+<li>Rate locked forever — price never increases</li>
+<li>Priority feature requests</li>
+<li>Direct WhatsApp to founder</li>
+</ul>
+<div class="slot-tracker">
+<div class="slot filled"></div>
+<div class="slot"></div>
+<div class="slot"></div>
+<div class="slot"></div>
+<div class="slot"></div>
+<div class="slot"></div>
+<div class="slot"></div>
+<div class="slot"></div>
+<div class="slot"></div>
+<div class="slot"></div>
+</div>
+<div class="slot-caption">1 of 10 slots taken. This offer closes at 10.</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===== 11: COMPETITOR COMPARISON ===== -->
+<section class="section sec-dark-2 section-border" id="comparison">
+<div class="container">
+<div class="label fade-up">Comparison</div>
+<h2 class="section-title fade-up" style="margin-bottom:40px">International platform. Malaysian pricing.</h2>
+<div class="comp-table-wrap fade-up">
+<table class="comp-table">
+<thead>
+<tr>
+<th></th>
+<th>Noryx</th>
+<th>GuardsPro (US)</th>
+<th>TrackTik (Canada)</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Price per guard</td><td>RM 8–40</td><td>RM 44–66</td><td>RM 35–88</td></tr>
+<tr><td>Client Portal</td><td>White-labeled (Elite+)</td><td>Basic</td><td>Enterprise only</td></tr>
+<tr><td>Malaysian compliance</td><td>EPF/SOCSO/EIS, KDN, BM</td><td>None</td><td>None</td></tr>
+<tr><td>Profitability P&amp;L</td><td>All tiers</td><td>Not available</td><td>Enterprise only</td></tr>
+<tr><td>Tender tracking</td><td>Built-in</td><td>Not available</td><td>Not available</td></tr>
+<tr><td>Guard mobile app</td><td>PWA, all tiers, offline</td><td>Paid add-on</td><td>Paid add-on</td></tr>
+<tr><td>Languages</td><td>EN + BM + Nepali</td><td>English only</td><td>EN + French</td></tr>
+<tr><td>Setup time</td><td>2–4 weeks</td><td>6–12 weeks</td><td>8–16 weeks</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<!-- ===== 12: ABOUT / FOUNDER ===== -->
+<section class="section sec-dark section-border" id="about">
+<div class="container">
+<div class="label fade-up">About</div>
+<h2 class="section-title fade-up" style="margin-bottom:40px">Built by someone who grew up in the industry.</h2>
+<blockquote class="founder-quote fade-up">"I grew up watching my parents manage 200+ guards on WhatsApp at 3am. Every screen in Noryx is designed around how security companies actually work — because I lived those problems for 13 years."</blockquote>
+<p class="founder-attr fade-up">— <strong>Arvin</strong>, Founder &amp; Director, Noryx Sdn Bhd</p>
+<div class="trust-row fade-up">
+<div class="trust-item">Malaysian compliance built-in: EPF/SOCSO/EIS auto-calc, KDN tracking, BM + Nepali support</div>
+<div class="trust-item">Data security: Supabase Pro (Singapore), row-level security, AES-256-GCM encryption</div>
+<div class="trust-item">5–8x cheaper than international alternatives. More features. Malaysian pricing.</div>
+</div>
+</div>
+</section>
+
+<!-- ===== 13: FAQ ===== -->
+<section class="section sec-dark-2 section-border" id="faq">
+<div class="container">
+<div class="label fade-up">Questions</div>
+<h2 class="section-title fade-up" style="margin-bottom:40px">Everything you need to know.</h2>
+<div class="faq-list fade-up">
+
+<div class="faq-item">
+<button class="faq-q">"Is my data secure?"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+<div class="faq-a"><div class="faq-a-inner">Your data is hosted on Supabase Pro in Singapore with row-level security — each company can only see their own data. Guard IC and passport numbers are encrypted with AES-256-GCM. All connections use HTTPS. We provide a Data Processing Agreement on request.</div></div>
+</div>
+
+<div class="faq-item">
+<button class="faq-q">"Do you have a mobile app?"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+<div class="faq-a"><div class="faq-a-inner">The Guard Portal is a PWA (Progressive Web App) — guards install it on their phone like an app from the browser. No app store download needed. It works on any Android or iPhone, supports 3 languages, and works offline.</div></div>
+</div>
+
+<div class="faq-item">
+<button class="faq-q">"Can my clients see their guards and invoices?"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+<div class="faq-a"><div class="faq-a-inner">Yes — with the Client Portal (Elite and Command tiers). It's white-labeled with your company's logo and colors. Clients log in with a magic link. They can view their guard roster, invoices, submit complaints, and send instructions to guards.</div></div>
+</div>
+
+<div class="faq-item">
+<button class="faq-q">"I have 300+ guards. Will it handle that?"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+<div class="faq-a"><div class="faq-a-inner">Yes. Our founding customer runs 220 guards on Noryx daily. The Master Import tool loads 200 guards from Excel in under 2 minutes. The system is built for companies with 50–500+ guards.</div></div>
+</div>
+
+<div class="faq-item">
+<button class="faq-q">"Do you handle payroll?"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+<div class="faq-a"><div class="faq-a-inner">Noryx tracks salary data with EPF/SOCSO/EIS auto-calculation, but doesn't generate bank payment files. You'll still process payroll through your bank — Noryx gives you the calculated amounts.</div></div>
+</div>
+
+<div class="faq-item">
+<button class="faq-q">"What if I cancel?"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+<div class="faq-a"><div class="faq-a-inner">After your initial 12-month commitment, you're month-to-month. Give 30 days notice, and we provide a full data export. No exit fees. Your data is always yours.</div></div>
+</div>
+
+<div class="faq-item">
+<button class="faq-q">"Can I track guard attendance?"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+<div class="faq-a"><div class="faq-a-inner">Yes. Guards clock in/out via the Guard Portal using GPS geofencing and selfie capture. You see all attendance records in your dashboard. GPS is captured at clock-in/out time — it's attendance verification, not real-time tracking.</div></div>
+</div>
+
+<div class="faq-item">
+<button class="faq-q">"Can I try before I buy?"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+<div class="faq-a"><div class="faq-a-inner">We do a 30-minute live demo using a real system managing 220 guards — not a slideshow. You see real data, real invoices, real dashboards. After the demo, if you want to proceed, we start onboarding within a week.</div></div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- ===== 14: FINAL CTA ===== -->
+<section class="final-cta sec-dark section-border">
+<div class="container">
+<div class="label fade-up">Get started</div>
+<h2 class="fade-up">See the live system managing 220 guards. Not a slideshow.</h2>
+<p class="fade-up">30-minute demo. Real data. On your phone or laptop.</p>
+<a href="https://wa.me/60121000503?text=Hi%20Arvin%2C%20I%27d%20like%20to%20book%20a%20Noryx%20demo." class="btn btn-primary fade-up" target="_blank" rel="noopener">Book a Demo on WhatsApp</a>
+<div class="final-email fade-up">Or email <a href="mailto:arvin@noryx.my">arvin@noryx.my</a></div>
+</div>
+</section>
+
+<!-- ===== 15: FOOTER ===== -->
+<footer class="footer sec-dark">
+<div class="container">
+<div class="footer-inner">
+<div class="footer-left">&copy; 2026 Noryx Sdn Bhd. All rights reserved.</div>
+<div class="footer-right">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+// Nav scroll effect
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>40)});
+
+// Mobile menu
+const menuBtn=document.getElementById('menuBtn');
+const mobileMenu=document.getElementById('mobileMenu');
+const overlay=document.getElementById('overlay');
+const closeMenu=document.getElementById('closeMenu');
+function openMenu(){mobileMenu.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden'}
+function closeM(){mobileMenu.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow=''}
+menuBtn.addEventListener('click',openMenu);
+closeMenu.addEventListener('click',closeM);
+overlay.addEventListener('click',closeM);
+document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click',closeM));
+
+// Scroll animations
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:0.15});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(btn=>{
+btn.addEventListener('click',()=>{
+const item=btn.parentElement;
+const wasOpen=item.classList.contains('open');
+document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+if(!wasOpen)item.classList.add('open');
+});
+});
+</script>
+</body>
+</html>
