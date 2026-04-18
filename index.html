@@ -538,8 +538,8 @@ a:hover{color:var(--blue-lt)}
 }
 .chart-header{
   display:flex;justify-content:space-between;align-items:flex-end;
-  margin-bottom:40px;flex-wrap:wrap;gap:20px;
-  position:relative;z-index:1
+  margin-bottom:56px;flex-wrap:wrap;gap:20px;
+  position:relative;z-index:2
 }
 .chart-header-title{
   font-size:14px;font-weight:600;letter-spacing:.3px;color:var(--white)
@@ -556,11 +556,11 @@ a:hover{color:var(--blue-lt)}
 .chart-body{
   display:flex;align-items:flex-end;justify-content:center;gap:80px;
   height:260px;position:relative;
-  padding:50px 20px 60px;
+  padding:72px 20px 60px;
   border-bottom:1px solid var(--line)
 }
 /* Grid lines */
-.chart-grid{position:absolute;inset:50px 0 60px;pointer-events:none}
+.chart-grid{position:absolute;inset:72px 0 60px;pointer-events:none}
 .chart-grid-line{
   position:absolute;left:0;right:0;height:1px;background:var(--line);opacity:.5
 }
@@ -635,10 +635,12 @@ a:hover{color:var(--blue-lt)}
 
 @media(max-width:720px){
   .chart-wrap{padding:28px 20px}
-  .chart-body{gap:36px;height:280px;padding:0 10px 50px}
+  .chart-body{gap:36px;height:280px;padding:56px 10px 50px}
+  .chart-grid{inset:56px 0 50px}
   .chart-bar-container{width:80px;height:220px}
   .chart-bar-value{font-size:16px;top:-28px}
   .chart-savings-num{font-size:22px}
+  .chart-header{margin-bottom:36px}
 }
 
 /* ============================================================
